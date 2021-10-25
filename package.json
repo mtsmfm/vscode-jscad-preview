@@ -1,0 +1,57 @@
+{
+  "name": "vscode-jscad-preview",
+  "version": "0.1.0",
+  "description": "",
+  "main": "./out/extension.js",
+  "publisher": "mtsmfm",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "esbuild src/extension.ts src/media/main.ts --bundle --outdir=out --external:vscode --sourcemap --platform=node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mtsmfm/vscode-jscad-preview.git"
+  },
+  "author": "Fumiaki MATSUSHIMA",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mtsmfm/vscode-jscad-preview/issues"
+  },
+  "homepage": "https://github.com/mtsmfm/vscode-jscad-preview#readme",
+  "devDependencies": {
+    "@types/node": "^16.11.4",
+    "@types/vscode": "^1.52.0",
+    "@types/vscode-webview": "^1.57.0",
+    "esbuild": "^0.13.9",
+    "ovsx": "^0.2.1",
+    "typescript": "^4.4.4",
+    "vsce": "^1.100.2"
+  },
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "jscadPreview.previewEditor",
+        "displayName": "JSCAD Preview",
+        "selector": [
+          {
+            "filenamePattern": "*.jscad.json"
+          }
+        ]
+      }
+    ]
+  },
+  "activationEvents": [
+    "onCustomEditor:jscadPreview.previewEditor"
+  ],
+  "engines": {
+    "vscode": "^1.52.0"
+  },
+  "dependencies": {
+    "@jscad/modeling": "^2.7.1",
+    "@jscad/regl-renderer": "^2.5.3"
+  },
+  "extensionKind": [
+    "ui",
+    "workspace"
+  ]
+}
