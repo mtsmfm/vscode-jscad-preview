@@ -1,6 +1,5 @@
 import * as vscode from "vscode";
 import { Disposable } from "./disposable";
-import { readFileSync } from "fs";
 
 const enum PreviewState {
   Init,
@@ -8,7 +7,7 @@ const enum PreviewState {
 }
 
 export interface Settings {
-  data: string;
+  src: string;
 }
 
 export class Preview extends Disposable {
@@ -82,8 +81,13 @@ export class Preview extends Disposable {
   }
 
   private async getWebviewContents(): Promise<string> {
+    const version = Date.now().toString();
     const settings: Settings = {
-      data: readFileSync(this.resource.fsPath, { encoding: "utf8" }),
+      src: await this.getResourcePath(
+        this.webviewEditor,
+        this.resource,
+        version
+      ),
     };
 
     const nonce = Date.now().toString();
@@ -109,6 +113,17 @@ export class Preview extends Disposable {
     this.extensionResource("/out/media/main.js")
   )}" nonce="${nonce}"></script>
 </html>`;
+  }
+
+  private async getResourcePath(
+    webviewEditor: vscode.WebviewPanel,
+    resource: vscode.Uri,
+    version: string
+  ): Promise<string> {
+    return webviewEditor.webview
+      .asWebviewUri(vscode.Uri.file(resource.fsPath))
+      .with({ query: `version=${version}` })
+      .toString();
   }
 
   private extensionResource(path: string) {
