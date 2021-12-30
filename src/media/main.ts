@@ -32,7 +32,7 @@ const vscode = acquireVsCodeApi<State>();
 const initialState = vscode.getState();
 
 const main = async () => {
-  const solidsJson = await (await fetch(getSettings().src)).json();
+  const solidsJson = JSON.parse(getSettings().data);
   const entities = entitiesFromSolids({}, solidsJson);
 
   const [minBoundingBox, maxBoundingBox] =
