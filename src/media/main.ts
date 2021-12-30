@@ -78,7 +78,7 @@ const main = async () => {
       drawCmd: "drawGrid",
       show: true,
     },
-    size: [size[0], size[1]],
+    size: [Math.max(size[0], size[1]) * 2, Math.max(size[0], size[1]) * 2],
     ticks: [10, 1],
     color: [0, 0, 1, 1],
     subColor: [0, 0, 1, 0.5],
