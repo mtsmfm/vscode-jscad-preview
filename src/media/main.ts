@@ -38,14 +38,11 @@ const main = async () => {
   const [minBoundingBox, maxBoundingBox] =
     measurements.measureAggregateBoundingBox(solidsJson);
 
-  const size = minBoundingBox.map(
-    (n, i) => Math.abs(n) + Math.abs(maxBoundingBox[i])
-  );
-
   const perspectiveCamera = cameras.perspective;
   const orbitControls = controls.orbit;
 
-  const containerElement = document.getElementById("jscad")!;
+  const containerElement = document.body;
+  containerElement.style.height = "100%";
 
   const state = initialState ?? {
     camera: perspectiveCamera.defaults,
@@ -72,6 +69,10 @@ const main = async () => {
   const renderer = prepareRender({
     glOptions: { container: containerElement },
   });
+
+  const size = minBoundingBox.map((n, i) =>
+    Math.max(Math.abs(n) + Math.abs(maxBoundingBox[i]))
+  );
 
   const gridOptions = {
     visuals: {

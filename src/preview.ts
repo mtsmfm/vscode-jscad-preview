@@ -94,7 +94,7 @@ export class Preview extends Disposable {
 
     const cspSource = this.webviewEditor.webview.cspSource;
     return /* html */ `<!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height:100%;">
 <head>
 	<meta charset="UTF-8">
 	<!-- Disable pinch zooming -->
@@ -106,8 +106,7 @@ export class Preview extends Disposable {
     JSON.stringify(settings)
   )}">
 </head>
-<body>
-  <div id="jscad" />
+<body style="height:100%;">
 </body>
 	<script src="${escapeAttribute(
     this.extensionResource("/out/media/main.js")
