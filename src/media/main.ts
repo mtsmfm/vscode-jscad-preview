@@ -41,6 +41,7 @@ const main = async () => {
   const perspectiveCamera = cameras.perspective;
   const orbitControls = controls.orbit;
 
+  document.body.oncontextmenu = () => false;
   const containerElement = document.body;
   containerElement.style.height = "100%";
 
