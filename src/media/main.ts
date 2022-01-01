@@ -29,7 +29,7 @@ interface State {
 }
 
 const vscode = acquireVsCodeApi<State>();
-const initialState = vscode.getState();
+const previousState = vscode.getState();
 
 const main = async () => {
   const solidsJson = await (await fetch(getSettings().src)).json();
@@ -41,11 +41,22 @@ const main = async () => {
   const perspectiveCamera = cameras.perspective;
   const orbitControls = controls.orbit;
 
+  document.body.style.height = "100%";
   document.body.oncontextmenu = () => false;
-  const containerElement = document.body;
+  const containerElement = document.getElementById("jscad")!;
   containerElement.style.height = "100%";
+  const resetButton = document.createElement("button");
+  resetButton.innerText = "Reset";
+  resetButton.style.position = "absolute";
+  resetButton.onclick = () => {
+    state.camera.position = initialState.camera.position;
+    state.camera.target = initialState.camera.target;
+    state.controls = { ...state.controls, ...initialState.controls };
+    updateView = true;
+  };
+  document.body.prepend(resetButton);
 
-  const state = initialState ?? {
+  const initialState = {
     camera: perspectiveCamera.defaults,
     controls: {
       ...orbitControls.defaults,
@@ -56,6 +67,8 @@ const main = async () => {
       }).controls,
     },
   };
+
+  let state = previousState ?? initialState;
 
   const onResize = () => {
     perspectiveCamera.setProjection(state.camera, state.camera, {

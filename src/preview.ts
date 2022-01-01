@@ -105,12 +105,13 @@ export class Preview extends Disposable {
 	<meta id="settings" data-settings="${escapeAttribute(
     JSON.stringify(settings)
   )}">
-</head>
-<body style="height:100%;">
-</body>
 	<script src="${escapeAttribute(
     this.extensionResource("/out/media/main.js")
   )}" nonce="${nonce}"></script>
+</head>
+<body>
+  <div id="jscad"/>
+</body>
 </html>`;
   }
 
