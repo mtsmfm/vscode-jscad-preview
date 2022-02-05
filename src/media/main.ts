@@ -76,6 +76,8 @@ const main = async () => {
       height: containerElement.clientHeight,
     });
     perspectiveCamera.update(state.camera, state.camera);
+
+    updateView = true;
   };
 
   new ResizeObserver(onResize).observe(containerElement);
